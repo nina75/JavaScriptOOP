@@ -7,9 +7,7 @@ var imdb = imdb || {};
         this.id = ++count;
         this.isPuppet = isPuppet;
     }
-    Theatre.prototype = Object.create(imdb.Movie.prototype);
-    Theatre.prototype.constructor = Theatre;
-
+    Theatre.extends(imdb.Movie);
     scope.getTheatre = function(title, length, rating, country, isPuppet) {
         return new Theatre(title, length, rating, country, isPuppet);
     }

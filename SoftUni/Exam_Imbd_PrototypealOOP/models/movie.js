@@ -2,17 +2,17 @@ var imdb = imdb || {};
 
 (function(scope) {
     var count = 0;
-    function Movie(title, length, rating, country) {
-        this._id = ++count;
-        this.title = title;
-        this.length = length;
-        this.rating = rating;
-        this.country = country;
-        this._actors = [];
-        this._reviews = [];
-    }
-
-    Movie.prototype = {
+    var movie = {
+        init: function (title, length, rating, country) {
+            this._id = ++count;
+            this.title = title;
+            this.length = length;
+            this.rating = rating;
+            this.country = country;
+            this._actors = [];
+            this._reviews = [];
+            return this;
+        },
         addActor: function(actor) {
             this._actors.push(actor);
         },
@@ -23,7 +23,7 @@ var imdb = imdb || {};
             this._reviews.push(review);
         },
         deleteReview: function(review) {
-            this.deleteReviewById(review.id);
+            this.deleteReviewById(review._id);
         },
         deleteReviewById: function(id){
             this._reviews = this._reviews.filter(function(review){
@@ -35,9 +35,9 @@ var imdb = imdb || {};
         }
     };
 
-    scope.Movie = Movie;
+    scope._movie = movie;
     scope.getMovie = function(title, length, rating, country) {
-        return new Movie(title, length, rating, country);
+        return Object.create(movie).init(title, length, rating, country);
     }
 })(imdb);
 
